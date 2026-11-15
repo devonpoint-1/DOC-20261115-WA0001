@@ -1,0 +1,406 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>الوسام المنصور: رسوم تشرح</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: a single motion-graphic explainer. One scene at a time, each scene draws its idea step by step,
+   then the player moves on. Palette: deep navy ground, gold accent, blue/violet/green/red for meaning. */
+:root{
+  --bg:#070a13; --panel:#0e1526; --panel-2:#16203a; --line:rgba(200,168,75,.22);
+  --gold:#c8a84b; --gold-l:#e9cd74; --fg:#eef2fa; --fg-2:#b3bdd3; --fg-3:#7f8ba6;
+  --blue:#60a5fa; --violet:#a78bfa; --green:#34d399; --red:#f87171;
+  --ease:cubic-bezier(.22,.8,.25,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.85 'Cairo','DejaVu Sans',sans-serif;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));min-width:0}
+.wrap{max-width:900px;margin:0 auto;min-width:0}
+button{font:inherit;color:var(--fg);background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:8px 14px;cursor:pointer;min-width:44px;min-height:44px}
+button:hover{border-color:var(--gold)}
+button:focus-visible{outline:2px solid var(--gold-l);outline-offset:2px}
+
+header.top{padding:28px 4px 14px;text-align:center}
+header.top h1{font:700 2rem/1.5 'Amiri',serif;color:var(--gold-l);margin:0;text-wrap:balance}
+header.top p{margin:4px 0 0;color:var(--fg-3);font-size:.92rem}
+
+/* the player */
+.player{background:var(--panel);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;min-width:0}
+.stage{position:relative;min-height:420px;padding:22px 18px 14px;min-width:0}
+.scene{display:none}
+.scene.on{display:block}
+.kicker{color:var(--gold);font-size:.85rem;font-weight:600;letter-spacing:.02em}
+.scene h2{font:700 1.45rem/1.5 'Amiri',serif;color:var(--gold-l);margin:4px 0 6px;text-wrap:balance}
+.cap{color:var(--fg-2);margin:0 0 14px;max-width:70ch;text-wrap:pretty}
+.art{position:relative;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-width:0}
+.art svg{width:100%;max-width:560px;height:auto;overflow:visible}
+.art text{font:600 15px 'Cairo',sans-serif;fill:var(--fg)}
+.art .small{font-size:12.5px;fill:var(--fg-3)}
+
+/* controls */
+.controls{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);flex-wrap:wrap}
+.controls .dots{display:flex;gap:8px;flex-basis:100%;order:3;justify-content:center;flex-wrap:wrap;min-width:0}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--panel-2);border:1px solid var(--line);padding:0;min-width:10px;min-height:10px}
+.dot[aria-current="true"]{background:var(--gold);border-color:var(--gold)}
+.clock{height:4px;background:var(--panel-2);margin:0 16px 12px;border-radius:4px;overflow:hidden}
+.clock i{display:block;height:100%;width:0;background:var(--gold);transform-origin:right}
+.clock.run i{animation:clock var(--dur,9s) linear forwards}
+@keyframes clock{from{width:0}to{width:100%}}
+.count{color:var(--fg-3);font-size:.85rem;min-width:60px;text-align:center}
+
+/* motion primitives, all keyed to .run on the active scene */
+.in{opacity:0}
+.run .in{animation:in .7s var(--ease) forwards;animation-delay:var(--d,0s)}
+@keyframes in{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.grow{transform-box:fill-box;transform-origin:bottom}
+.run .grow{animation:grow 1.1s var(--ease) forwards;animation-delay:var(--d,0s);transform:scaleY(0)}
+@keyframes grow{to{transform:scaleY(1)}}
+.slide{transform-box:fill-box}
+.run .slide{animation:slide 1.2s var(--ease) forwards;animation-delay:var(--d,0s);transform:translate(var(--sx,0),var(--sy,0))}
+@keyframes slide{to{transform:translate(0,0)}}
+.fillx{transform-box:fill-box;transform-origin:right}
+.run .fillx{animation:fillx 1.4s var(--ease) forwards;animation-delay:var(--d,0s);transform:scaleX(0)}
+@keyframes fillx{to{transform:scaleX(1)}}
+.trail{stroke-dasharray:6 10}
+.run .trail{animation:flow 1.6s linear infinite;animation-delay:var(--d,0s)}
+@keyframes flow{to{stroke-dashoffset:-32}}
+.orbit{transform-box:view-box;transform-origin:280px 150px}
+.run .orbit{animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hl{transition:fill .5s,stroke .5s}
+.run .pulse{animation:pulse 1.8s var(--ease) infinite;animation-delay:var(--d,0s);transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+/* text-based items reveal in sequence */
+.steps{display:grid;gap:8px;width:100%;max-width:560px;min-width:0}
+.step{background:var(--panel-2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px 14px;opacity:0}
+.step small{display:block;color:var(--fg-3);font-size:.8rem}
+.run .step{animation:in .6s var(--ease) forwards;animation-delay:var(--d,0s)}
+.step.hit{border-color:var(--gold)}
+.eq{font-weight:700;color:var(--gold-l);font-size:1.05rem;text-align:center;padding:10px 14px;border:1px dashed var(--gold);border-radius:12px;background:rgba(200,168,75,.07);width:100%;max-width:620px;min-width:0}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:.85rem;color:var(--fg-2)}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-inline-end:6px}
+
+@media (max-width:560px){
+  header.top h1{font-size:1.6rem}
+  .scene h2{font-size:1.2rem}
+  .stage{min-height:460px;padding:16px 12px 10px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .in,.step{opacity:1}
+  .grow,.fillx,.slide{transform:none!important}
+  .trail{stroke-dasharray:none}
+}
+</style>
+
+<div dir="rtl" lang="ar" style="direction:rtl;text-align:right">
+<div class="wrap">
+<header class="top">
+  <h1>الوسام المنصور: رسوم تشرح المنهج</h1>
+  <p>سبع محاضرات في المنظور الإعلامي والنفسي والاجتماعي لإدارة الأزمات والكوارث</p>
+</header>
+
+<div class="player" id="player">
+  <div class="stage">
+
+    <!-- 1 -->
+    <section class="scene" data-title="الأزمة والكارثة والطوارئ" data-dur="11">
+      <div class="kicker">المحاضرة الأولى</div>
+      <h2>الفرق بين الطوارئ والأزمة والكارثة</h2>
+      <p class="cap">الطوارئ حدث تشغيلي تكفيه الإمكانيات المعتادة. الأزمة تتطلب قراراً حاسماً في وقت ضيق. والكارثة تتجاوز الإمكانيات المحلية كلياً.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 260" role="img" aria-label="أعمدة تتجاوز خط القدرة في الكارثة">
+          <line x1="40" y1="60" x2="540" y2="60" stroke="#c8a84b" stroke-width="2" stroke-dasharray="8 6" class="in" style="--d:.2s"/>
+          <text x="530" y="52" text-anchor="end" class="in" style="--d:.2s">حدود القدرة المحلية</text>
+          <rect class="grow" x="110" y="160" width="90" height="80" rx="8" fill="#60a5fa" style="--d:.6s"/>
+          <rect class="grow" x="250" y="110" width="90" height="130" rx="8" fill="#a78bfa" style="--d:1.2s"/>
+          <rect class="grow" x="390" y="20" width="90" height="220" rx="8" fill="#f87171" style="--d:1.8s"/>
+          <text x="155" y="250" text-anchor="middle" class="in" style="--d:1s">الطوارئ</text>
+          <text x="295" y="250" text-anchor="middle" class="in" style="--d:1.6s">الأزمة</text>
+          <text x="435" y="250" text-anchor="middle" class="in" style="--d:2.2s">الكارثة</text>
+          <text x="435" y="12" text-anchor="middle" class="in" style="--d:2.8s" fill="#f87171">تتجاوز القدرة</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="scene" data-title="المحاور الثلاثة" data-dur="10">
+      <div class="kicker">المحاضرة الأولى</div>
+      <h2>المحاور الثلاثة تتكامل في الأمن القومي</h2>
+      <p class="cap">الإعلامي يمنع فراغ المعلومات، والنفسي يحفظ قدرة الناس على اتخاذ القرار، والاجتماعي يحشد التضامن. وإغفال أحدها يُفشل الخطة.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 300" role="img" aria-label="ثلاث دوائر تتجمع في الأمن القومي الشامل">
+          <g class="slide" style="--sx:0px;--sy:40px;--d:0s"><circle cx="280" cy="110" r="78" fill="rgba(96,165,250,.28)" stroke="#60a5fa" stroke-width="2"/></g>
+          <g class="slide" style="--sx:-90px;--sy:-50px;--d:.4s"><circle cx="370" cy="200" r="78" fill="rgba(167,139,250,.28)" stroke="#a78bfa" stroke-width="2"/></g>
+          <g class="slide" style="--sx:90px;--sy:-50px;--d:.8s"><circle cx="190" cy="200" r="78" fill="rgba(52,211,153,.28)" stroke="#34d399" stroke-width="2"/></g>
+          <text x="280" y="62" text-anchor="middle" class="in" style="--d:1.6s">الإعلامي</text>
+          <text x="370" y="250" text-anchor="middle" class="in" style="--d:1.8s">النفسي</text>
+          <text x="190" y="250" text-anchor="middle" class="in" style="--d:2s">الاجتماعي</text>
+          <text x="280" y="158" text-anchor="middle" class="in" style="--d:2.6s" fill="#e9cd74">الأمن القومي الشامل</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="scene" data-title="مراحل الاتصال الاستراتيجي" data-dur="10">
+      <div class="kicker">المحاضرة الأولى</div>
+      <h2>الاتصال يتبع مراحل الأزمة</h2>
+      <p class="cap">قبل الأزمة يُبنى الإنذار والتدريب، وعند الاندلاع يتحدث متحدث واحد ويُحتوى الصدمة، ثم تُدحض الشائعات، وأخيراً تُعاد بناء الثقة.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 200" role="img" aria-label="أربع مراحل على خط زمني">
+          <line x1="50" y1="100" x2="510" y2="100" stroke="#c8a84b" stroke-width="3" class="fillx" style="--d:.2s"/>
+          <circle cx="50" cy="100" r="12" fill="#c8a84b" class="in" style="--d:.2s"/>
+          <circle cx="190" cy="100" r="12" fill="#c8a84b" class="in" style="--d:1.2s"/>
+          <circle cx="330" cy="100" r="12" fill="#c8a84b" class="in" style="--d:2.2s"/>
+          <circle cx="470" cy="100" r="12" fill="#c8a84b" class="in" style="--d:3.2s"/>
+          <circle r="6" fill="#f87171" class="pulse"><animateMotion dur="4s" repeatCount="indefinite" path="M50,100 L510,100"/></circle>
+          <text x="50" y="72" text-anchor="middle" class="in" style="--d:.4s">إنذار وتدريب</text>
+          <text x="190" y="72" text-anchor="middle" class="in" style="--d:1.4s">متحدث واحد</text>
+          <text x="330" y="72" text-anchor="middle" class="in" style="--d:2.4s">دحض الشائعات</text>
+          <text x="470" y="72" text-anchor="middle" class="in" style="--d:3.4s">بناء الثقة</text>
+          <text x="50" y="140" text-anchor="middle" class="small in" style="--d:.6s">قبل الأزمة</text>
+          <text x="190" y="140" text-anchor="middle" class="small in" style="--d:1.6s">الاندلاع</text>
+          <text x="330" y="140" text-anchor="middle" class="small in" style="--d:2.6s">التفاقم</text>
+          <text x="470" y="140" text-anchor="middle" class="small in" style="--d:3.6s">التعافي</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="scene" data-title="تطور الإعلام" data-dur="10">
+      <div class="kicker">المحاضرة الثانية</div>
+      <h2>الإعلام يتسارع من التقليدي إلى الذكي</h2>
+      <p class="cap">كل مرحلة أسرع من سابقتها: من الصحف المتأخرة إلى البث المباشر، ثم التفاعل الفوري، وأخيراً البيانات والتنبؤ.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 220" role="img" aria-label="مسار تطور الإعلام">
+          <path d="M40,150 C160,150 180,100 280,100 S420,50 520,50" fill="none" stroke="#60a5fa" stroke-width="3" class="trail"/>
+          <circle cx="40" cy="150" r="20" fill="#16203a" stroke="#60a5fa" class="in" style="--d:.2s"/>
+          <circle cx="200" cy="112" r="20" fill="#16203a" stroke="#60a5fa" class="in" style="--d:1.2s"/>
+          <circle cx="360" cy="64" r="20" fill="#16203a" stroke="#60a5fa" class="in" style="--d:2.2s"/>
+          <circle cx="520" cy="50" r="20" fill="#16203a" stroke="#60a5fa" class="in" style="--d:3.2s"/>
+          <text x="40" y="196" text-anchor="middle" class="in" style="--d:.4s">تقليدي</text>
+          <text x="200" y="146" text-anchor="middle" class="in" style="--d:1.4s">فضائي</text>
+          <text x="360" y="98" text-anchor="middle" class="in" style="--d:2.4s">رقمي</text>
+          <text x="520" y="84" text-anchor="middle" class="in" style="--d:3.4s">ذكي</text>
+          <circle r="7" fill="#e9cd74" class="pulse"><animateMotion dur="5s" repeatCount="indefinite" path="M40,150 C160,150 180,100 280,100 S420,50 520,50"/></circle>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="scene" data-title="المسؤولية المدركة والاستجابة" data-dur="11">
+      <div class="kicker">المحاضرة الثالثة</div>
+      <h2>كلما ارتفعت المسؤولية زاد الاعتذار والتصحيح</h2>
+      <p class="cap">نظرية SCCT: الاستجابة تتغير بحسب نوع الأزمة. وكلما شعر الجمهور بأن المؤسسة كان يمكنها المنع، تعاظمت حاجتها إلى التصحيح والاعتذار.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 260" role="img" aria-label="مقياس المسؤولية المدركة من الضحية إلى الأفعال القابلة للمنع">
+          <line x1="60" y1="190" x2="500" y2="190" stroke="#2a3756" stroke-width="10" stroke-linecap="round"/>
+          <line x1="60" y1="190" x2="500" y2="190" stroke="url(#g)" stroke-width="10" stroke-linecap="round" class="fillx" style="--d:.3s"/>
+          <defs><linearGradient id="g"><stop offset="0" stop-color="#34d399"/><stop offset=".5" stop-color="#e9cd74"/><stop offset="1" stop-color="#f87171"/></linearGradient></defs>
+          <text x="60" y="222" text-anchor="middle" class="in" style="--d:.6s">أزمات الضحية</text>
+          <text x="280" y="222" text-anchor="middle" class="in" style="--d:1.2s">أزمات الحوادث</text>
+          <text x="500" y="222" text-anchor="middle" class="in" style="--d:1.8s">الأفعال القابلة للمنع</text>
+          <text x="60" y="140" text-anchor="middle" class="small in" style="--d:.8s">مسؤولية منخفضة</text>
+          <text x="500" y="140" text-anchor="middle" class="small in" style="--d:2s">مسؤولية مرتفعة</text>
+          <rect x="140" y="60" width="280" height="62" rx="12" fill="#16203a" stroke="#c8a84b" class="in" style="--d:2.6s"/>
+          <text x="280" y="98" text-anchor="middle" class="in" style="--d:3s">التصحيح والاعتذار وتحمل المسؤولية</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="scene" data-title="معادلة النجاح" data-dur="9">
+      <div class="kicker">المحاضرة الرابعة</div>
+      <h2>نجاح الإدارة يقوم على القرار والاتصال معاً</h2>
+      <p class="cap">لا تعني السرعة نشر غير المؤكد، ولا الدقة الصمت حتى تكتمل التفاصيل.</p>
+      <div class="art">
+        <div class="steps">
+          <div class="eq in" style="--d:.2s">نجاح الإدارة = جودة القرار + جودة الاتصال به في الوقت المناسب</div>
+          <div class="step in" style="--d:1.4s">سرعة <small>دون نشر غير مؤكد</small></div>
+          <div class="step in" style="--d:2.2s">دقة <small>دون صمت حتى تكتمل التفاصيل</small></div>
+          <div class="step in" style="--d:3s">وضوح وتعاطف واستمرارية <small>في كل رسالة</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="scene" data-title="سلسلة الشائعة" data-dur="12">
+      <div class="kicker">المحاضرة الخامسة</div>
+      <h2>كيف تتحول الشائعة إلى أزمة</h2>
+      <p class="cap">الشائعة تولّد الخوف، والخوف يدفع إلى الشراء الزائد، فيحدث نقص مؤقت وترتفع الأسعار، فيزداد الخوف. الحلقة تغذي نفسها.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 320" role="img" aria-label="حلقة تبدأ بالشائعة وتعود إلى الخوف">
+          <circle cx="280" cy="160" r="110" fill="none" stroke="#2a3756" stroke-width="2"/>
+          <circle r="7" fill="#f87171" class="pulse"><animateMotion dur="9s" repeatCount="indefinite" path="M280,50 A110,110 0 1,1 279.9,50"/></circle>
+          <g class="in" style="--d:.2s"><rect x="230" y="26" width="100" height="40" rx="10" fill="#16203a" stroke="#f87171"/><text x="280" y="52" text-anchor="middle">شائعة</text></g>
+          <g class="in" style="--d:1.2s"><rect x="380" y="128" width="130" height="40" rx="10" fill="#16203a" stroke="#f87171"/><text x="445" y="154" text-anchor="middle">شراء زائد</text></g>
+          <g class="in" style="--d:2.2s"><rect x="230" y="232" width="100" height="40" rx="10" fill="#16203a" stroke="#f87171"/><text x="280" y="258" text-anchor="middle">نقص مؤقت</text></g>
+          <g class="in" style="--d:3.2s"><rect x="40" y="128" width="120" height="40" rx="10" fill="#16203a" stroke="#f87171"/><text x="100" y="154" text-anchor="middle">ارتفاع الأسعار</text></g>
+          <text x="280" y="168" text-anchor="middle" class="in" style="--d:4.2s" fill="#f87171">مزيد من الخوف</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="scene" data-title="قاعدة التحقق" data-dur="10">
+      <div class="kicker">المحاضرة الخامسة</div>
+      <h2>توقف، تحقق، ثم قرر</h2>
+      <p class="cap">إذا دفعك المحتوى إلى التصرف بسرعة فخذ وقتاً أطول للتحقق. لا تكن أول من ينشر؛ كن أول من يتحقق.</p>
+      <div class="art">
+        <div class="steps">
+          <div class="step in" style="--d:.4s">توقف <small>لا تشارك فوراً</small></div>
+          <div class="step in" style="--d:1.6s">تحقق <small>المصدر والتاريخ والدليل</small></div>
+          <div class="step in hit" style="--d:2.8s">قرر <small>إن لم تتحقق فلا تنشر</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="scene" data-title="فجوة المعرفة" data-dur="10">
+      <div class="kicker">المحاضرة السادسة</div>
+      <h2>الأزمة تتسع حين تتسع الفجوة</h2>
+      <p class="cap">الفجوة بين ما يحتاج الجمهور إلى معرفته وما تستطيع المؤسسة قوله. الإدارة الجيدة تضيّقها بصدق وتحديث مستمر.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 220" role="img" aria-label="ما يحتاج الجمهور معرفته وما تقوله المؤسسة">
+          <text x="20" y="60" class="in" style="--d:.2s">ما يحتاج الجمهور معرفته</text>
+          <rect x="20" y="70" width="520" height="28" rx="14" fill="#16203a"/>
+          <rect class="fillx" x="20" y="70" width="520" height="28" rx="14" fill="#60a5fa" style="--d:.6s"/>
+          <text x="20" y="150" class="in" style="--d:1.4s">ما تقوله المؤسسة، ويتسع بالصدق والتحديث</text>
+          <rect x="20" y="160" width="520" height="28" rx="14" fill="#16203a"/>
+          <rect class="fillx" x="20" y="160" width="458" height="28" rx="14" fill="#34d399" style="--d:1.8s"/>
+          <text x="540" y="205" text-anchor="end" class="small in" style="--d:3s">الفجوة تضيق مع كل تحديث صادق</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="scene" data-title="الشائعات وقواعد الرد" data-dur="10">
+      <div class="kicker">المحاضرة الخامسة</div>
+      <h2>الرد يبدأ بالتعاطف ثم الحقيقة المؤكدة</h2>
+      <p class="cap">رسالة المتحدث تبدأ بالتعاطف، ثم الحقيقة المؤكدة، ثم الإجراء، والتعليمات، وحدود المعرفة، وموعد التحديث.</p>
+      <div class="art">
+        <div class="steps">
+          <div class="step in" style="--d:.3s">تعاطف</div>
+          <div class="step in" style="--d:1s">حقيقة مؤكدة</div>
+          <div class="step in" style="--d:1.7s">إجراء</div>
+          <div class="step in" style="--d:2.4s">تعليمات</div>
+          <div class="step in" style="--d:3.1s">حدود المعرفة</div>
+          <div class="step in" style="--d:3.8s">موعد التحديث</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="scene" data-title="الضغط النفسي والدعم" data-dur="11">
+      <div class="kicker">المحاضرة السابعة</div>
+      <h2>الدعم يخفض الضغط النفسي</h2>
+      <p class="cap">شدة التهديد والغموض وفقدان السيطرة ترفع الضغط. والدعم والثقة والاستعداد تخفضه. هذه معادلة تفسيرية لا إحصائية.</p>
+      <div class="art">
+        <svg viewBox="0 0 560 240" role="img" aria-label="مقارنة الضغط مع الدعم وبدونه">
+          <text x="20" y="50" class="in" style="--d:.2s">بلا دعم أو ثقة أو استعداد</text>
+          <rect x="20" y="60" width="520" height="30" rx="15" fill="#16203a"/>
+          <rect class="fillx" x="20" y="60" width="442" height="30" rx="15" fill="#f87171" style="--d:.6s"/>
+          <text x="20" y="150" class="in" style="--d:1.6s">مع الدعم والثقة والاستعداد</text>
+          <rect x="20" y="160" width="520" height="30" rx="15" fill="#16203a"/>
+          <rect class="fillx" x="20" y="160" width="182" height="30" rx="15" fill="#34d399" style="--d:2s"/>
+        </svg>
+        <div class="eq in" style="--d:3s">شدة التهديد + الغموض + فقدان السيطرة − (الدعم + الثقة + الاستعداد) = الضغط</div>
+      </div>
+    </section>
+
+    <!-- 12 -->
+    <section class="scene" data-title="الإسعافات النفسية الأولية" data-dur="9">
+      <div class="kicker">المحاضرة السابعة</div>
+      <h2>ثلاث خطوات للإسعاف النفسي الأولي</h2>
+      <p class="cap">إسعاف نفسي أولي وليس علاجاً ولا تشخيصاً. ابدأ بالسلامة، ثم استمع دون إجبار، ثم اربط بالخدمات والأسرة.</p>
+      <div class="art">
+        <div class="steps">
+          <div class="step in" style="--d:.3s">انظر <small>السلامة والاحتياجات العاجلة</small></div>
+          <div class="step in" style="--d:1.4s">استمع <small>بهدوء ودون إجبار على السرد</small></div>
+          <div class="step in" style="--d:2.5s">اربط <small>بالخدمات والأسرة</small></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="clock" aria-hidden="true"><i id="bar"></i></div>
+  <div class="controls">
+    <button id="prev" type="button" aria-label="المشهد السابق">السابق</button>
+    <button id="play" type="button" aria-pressed="true" aria-label="إيقاف مؤقت أو تشغيل">إيقاف مؤقت</button>
+    <button id="next" type="button" aria-label="المشهد التالي">التالي</button>
+    <div class="dots" id="dots" role="group" aria-label="المشاهد"></div>
+    <div class="count" id="count" style="order:2"></div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+  var scenes = Array.prototype.slice.call(document.querySelectorAll('.scene'));
+  var dotsEl = document.getElementById('dots');
+  var bar = document.getElementById('bar');
+  var clock = bar.parentNode;
+  var countEl = document.getElementById('count');
+  var playBtn = document.getElementById('play');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx = 0, playing = !reduce, timer = null;
+
+  scenes.forEach(function(s,i){
+    var d = document.createElement('button');
+    d.type = 'button'; d.className = 'dot'; d.setAttribute('aria-label', 'المشهد ' + (i+1) + ': ' + s.dataset.title);
+    d.addEventListener('click', function(){ go(i, true); });
+    dotsEl.appendChild(d);
+  });
+
+  function show(i){
+    scenes.forEach(function(s,k){
+      var on = k === i;
+      s.hidden = !on; s.classList.toggle('on', on);
+      if (on) { s.classList.remove('run'); void s.offsetWidth; s.classList.add('run'); }
+    });
+    Array.prototype.forEach.call(dotsEl.children, function(d,k){ d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    countEl.textContent = (i+1) + ' / ' + scenes.length;
+    var dur = (+scenes[i].dataset.dur || 10) * 1000;
+    clock.classList.remove('run'); bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+    clock.style.setProperty('--dur', dur + 'ms');
+    if (playing && !reduce) { clock.classList.add('run'); }
+  }
+
+  function schedule(){
+    clearTimeout(timer);
+    if (!playing || reduce) return;
+    var dur = (+scenes[idx].dataset.dur || 10) * 1000;
+    timer = setTimeout(function(){ go((idx + 1) % scenes.length, false); }, dur);
+  }
+
+  function go(i, byUser){
+    idx = i; show(idx);
+    if (byUser && playing) { schedule(); } else if (playing) { schedule(); }
+  }
+
+  function setPlaying(p){
+    playing = p;
+    playBtn.textContent = playing ? 'إيقاف مؤقت' : 'تشغيل';
+    playBtn.setAttribute('aria-pressed', String(playing));
+    if (playing) { schedule(); clock.classList.add('run'); } else { clearTimeout(timer); clock.classList.remove('run'); }
+  }
+
+  document.getElementById('next').addEventListener('click', function(){ go((idx+1)%scenes.length, true); });
+  document.getElementById('prev').addEventListener('click', function(){ go((idx-1+scenes.length)%scenes.length, true); });
+  playBtn.addEventListener('click', function(){ setPlaying(!playing); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft') go((idx+1)%scenes.length, true);
+    if (e.key === 'ArrowRight') go((idx-1+scenes.length)%scenes.length, true);
+    if (e.key === ' ' && e.target === document.body) { e.preventDefault(); setPlaying(!playing); }
+  });
+
+  show(0);
+  if (reduce) { playing = false; playBtn.textContent = 'تشغيل'; playBtn.setAttribute('aria-pressed','false'); }
+  else { schedule(); }
+})();
+</script>
+
+</body></html>
